@@ -2,6 +2,7 @@ import pygame as pg
 from constants import *
 from math import *
 from menu import handleMenu
+import collisionDetector as cd
 
 
 def handleEvents(screen):
@@ -46,7 +47,15 @@ def handleMovement(pos, angle, clock):
     if pos_diff_size != 0:
         pos_diff[0] /= pos_diff_size
         pos_diff[1] /= pos_diff_size
-        
-    
-    return ((x + pos_diff[0] * delta_t * SPEED_M, y + pos_diff[1] * delta_t * SPEED_M), angle)
+
+    pos_diff[0] *= delta_t * SPEED_M
+    pos_diff[1] *= delta_t * SPEED_M
+
+    if not cd.isInWall((x + pos_diff[0], y + pos_diff[1])):
+        return ((x + pos_diff[0], y + pos_diff[1]), angle)
+    if not cd.isInWall((x + pos_diff[0], y)):
+        return ((x + pos_diff[0], y), angle)
+    if not cd.isInWall((x, y + pos_diff[1])):
+        return ((x, y + pos_diff[1]), angle)
+    return ((x, y), angle)
 
