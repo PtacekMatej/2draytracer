@@ -9,8 +9,10 @@ from rayTracer import traceRayHorizontal, traceRayVertical
 
 
 def render(pos, angle, screen):
-    for i in range(-100, 100):
-        new_angle = angle + (i * PI / 600)
+    scr_width, scr_height = pg.display.get_surface().get_size()
+    for i in range(-scr_width//2, scr_width//2):
+        angle_diff = i * PI / scr_width / 3
+        new_angle = angle + angle_diff
         if new_angle < 0:
             new_angle += 2*PI
         elif new_angle > 2*PI:
@@ -26,8 +28,8 @@ def render(pos, angle, screen):
 
         shade /=  max(1, d / 10 / GRID_SIZE)
         color = (0, int(shade), 0)
-        height = SCREEN_HEIGHT
+        height = scr_height
         if d != 0:
-            height = int(400 * BLOCK_SIZE / (d * cos(i * PI / 600) ))
+            height = int(scr_width / 2 * BLOCK_SIZE / (d * cos(angle_diff) ))
 
-        pg.draw.rect(screen, color, pg.Rect(SCREEN_WIDTH - (i+100)*4, (SCREEN_HEIGHT-height)/2, 4, height))
+        pg.draw.rect(screen, color, pg.Rect(scr_width - (i+scr_width//2), (scr_height-height)/2, 1, height))
