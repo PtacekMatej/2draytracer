@@ -12,12 +12,12 @@ def traceRayHorizontal(pos_x, pos_y, angle):
         dirX = -1
         idx_correctionX = -1
     dist = pos_x % BLOCK_SIZE
-    if dirX == -1:
+    if dirX == 1:
         dist -= BLOCK_SIZE
 
     y_diff = BLOCK_SIZE * cot(angle) * dirX
-    y = pos_y + dist * cot(angle)
-    x = pos_x + dist
+    y = pos_y - dist * cot(angle)
+    x = pos_x - dist
 
     for _ in range(10):
         idx_x = (x // BLOCK_SIZE) + idx_correctionX
@@ -38,12 +38,12 @@ def traceRayVertical(pos_x, pos_y, angle):
         idx_correctionY = -1
     
     dist = pos_y % BLOCK_SIZE
-    if dirY == -1:
+    if dirY == 1:
         dist -= BLOCK_SIZE
     
     x_diff = BLOCK_SIZE * tan(angle) * dirY
-    x = pos_x + dist * tan(angle)
-    y = pos_y + dist
+    x = pos_x - dist * tan(angle)
+    y = pos_y - dist
     for _ in range(10):
         idx_x = (x // BLOCK_SIZE)
         idx_y = (y // BLOCK_SIZE) + idx_correctionY

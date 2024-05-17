@@ -28,4 +28,4 @@ def render(pos, angle, screen):
         color = (0, int(shade), 0)
         height = int(8000 / (d * cos(i * PI / 600) ))
 
-        pg.draw.rect(screen, color, pg.Rect((i+100)*4, (SCREEN_HEIGHT-height)/2, 4, height))
+        pg.draw.rect(screen, color, pg.Rect(SCREEN_WIDTH - (i+100)*4, (SCREEN_HEIGHT-height)/2, 4, height))
