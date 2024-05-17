@@ -1,28 +1,7 @@
 import pygame as pg
 from math import *
-
-
-PI = 3.14159265358979323
-
-
-SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
-
-BLOCK_SIZE = 16
-GRID_SIZE = 8
-
-
-PLAYER_POS = [64, 64]
-
-GAME_WORLD = [
-    1, 1, 1, 1, 1, 1, 1, 1,
-    1, 0, 0, 1, 0, 0, 0, 1, 
-    1, 0, 0, 1, 0, 1, 0, 1, 
-    1, 1, 0, 0, 0, 0, 0, 1, 
-    1, 0, 0, 0, 0, 0, 0, 1, 
-    1, 0, 0, 0, 0, 1, 0, 1, 
-    1, 0, 1, 0, 0, 0, 0, 1, 
-    1, 1, 1, 1, 1, 1, 1, 1
-]
+from handleEvents import handleMovement
+from constants import *
 
 def cot(x):
     return 1/tan(x)
@@ -100,7 +79,7 @@ def traceRay(pos, angle):
 
 def render(pos, angle, screen):
     for i in range(-100, 100):
-        new_angle = angle + (i * PI / 500)
+        new_angle = angle + (i * PI / 600)
         if new_angle < 0:
             new_angle += 2*PI
         elif new_angle > 2*PI:
@@ -116,7 +95,7 @@ def render(pos, angle, screen):
 
         shade /= max(1, d / 100)
         color = (0, int(shade), 0)
-        height = int(8000 / (d * cos(i * PI / 500) ))
+        height = int(8000 / (d * cos(i * PI / 600) ))
 
         pg.draw.rect(screen, color, pg.Rect((i+100)*4, (SCREEN_HEIGHT-height)/2, 4, height))
 
@@ -139,11 +118,20 @@ def main():
     clock = pg.time.Clock()
 
     PLAYER_ANGLE = 2*PI/3
+    PLAYER_POS = [64, 64]
+
+
+    pg.mouse.set_visible(False)
+
     while True:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+
+
+
+
         screen.fill((0, 0, 0))
-        PLAYER_ANGLE = PLAYER_ANGLE + 0.0003 * clock.tick()
-        if PLAYER_ANGLE > 2*PI:
-            PLAYER_ANGLE -= 2*PI
 
 
 
@@ -163,11 +151,14 @@ def main():
         pg.draw.rect(screen, (255, 0, 0), pg.Rect(PLAYER_POS[0] - 1, PLAYER_POS[1] - 1, 3, 3))
 
 
+
+
+
+        PLAYER_POS, PLAYER_ANGLE = handleMovement(PLAYER_POS, PLAYER_ANGLE, clock)
         
 
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
+        
+                
         pg.display.flip()
 
 
