@@ -26,20 +26,27 @@ def handleMovement(pos, angle, clock):
 
     x, y = pos
 
-    if keys[pg.K_w]:
-        x -= sin(angle) * SPEED_M * delta_t
-        y -= cos(angle) * SPEED_M * delta_t
-    if keys[pg.K_s]:
-        x += sin(angle) * SPEED_M * delta_t
-        y += cos(angle) * SPEED_M * delta_t
-    if keys[pg.K_a]:
-        x -= cos(angle) * SPEED_M * delta_t
-        y += sin(angle) * SPEED_M * delta_t
-    if keys[pg.K_d]:
-        x += cos(angle) * SPEED_M * delta_t
-        y -= sin(angle) * SPEED_M * delta_t
+    pos_diff = [0, 0]
 
+    if keys[pg.K_w]:
+        pos_diff[0] -= sin(angle)
+        pos_diff[1] -= cos(angle)
+    if keys[pg.K_s]:
+        pos_diff[0] += sin(angle)
+        pos_diff[1] += cos(angle)
+    if keys[pg.K_a]:
+        pos_diff[0] -= cos(angle)
+        pos_diff[1] += sin(angle)
+    if keys[pg.K_d]:
+        pos_diff[0] += cos(angle)
+        pos_diff[1] -= sin(angle)
+
+    pos_diff_size = dist([0, 0], pos_diff)
+
+    if pos_diff_size != 0:
+        pos_diff[0] /= pos_diff_size
+        pos_diff[1] /= pos_diff_size
         
     
-    return ((x, y), angle)
+    return ((x + pos_diff[0] * delta_t * SPEED_M, y + pos_diff[1] * delta_t * SPEED_M), angle)
 

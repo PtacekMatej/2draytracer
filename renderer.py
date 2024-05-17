@@ -30,6 +30,6 @@ def render(pos, angle, screen):
         color = (0, int(shade), 0)
         height = scr_height
         if d != 0:
-            height = int(scr_width / 2 * BLOCK_SIZE / (d * cos(angle_diff) ))
+            height = int(scr_width * BLOCK_SIZE / (d * cos(angle_diff) ))
 
         pg.draw.rect(screen, color, pg.Rect(scr_width - (i+scr_width//2), (scr_height-height)/2, 1, height))
