@@ -1,6 +1,16 @@
 import pygame as pg
 from constants import *
 from math import *
+from menu import handleMenu
+
+
+def handleEvents(screen):
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_q:
+                handleMenu(screen)
 
 
 def handleMovement(pos, angle, clock):
