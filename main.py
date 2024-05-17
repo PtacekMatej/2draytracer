@@ -22,7 +22,7 @@ def main():
     clock = pg.time.Clock()
 
     PLAYER_ANGLE = 2*PI/3
-    PLAYER_POS = [64, 64]
+    PLAYER_POS = [128, 128]
 
 
     pg.mouse.set_visible(False)
@@ -42,17 +42,17 @@ def main():
         render(PLAYER_POS, PLAYER_ANGLE, screen)
 
 
-        pg.draw.rect(screen, (0, 0, 0), pg.Rect(0, 0, BLOCK_SIZE * GRID_SIZE, BLOCK_SIZE * GRID_SIZE))
-        for block_idx in range(len(GAME_WORLD)):
-            if GAME_WORLD[block_idx] == 1:
-                pg.draw.rect(screen, (255, 255, 255), pg.Rect(BLOCK_SIZE * (block_idx % 8), BLOCK_SIZE * (block_idx // 8), BLOCK_SIZE, BLOCK_SIZE))
+        #pg.draw.rect(screen, (0, 0, 0), pg.Rect(0, 0, BLOCK_SIZE * GRID_SIZE, BLOCK_SIZE * GRID_SIZE))
+        #for block_idx in range(len(GAME_WORLD)):
+        #    if GAME_WORLD[block_idx] == 1:
+        #        pg.draw.rect(screen, (255, 255, 255), pg.Rect(BLOCK_SIZE * (block_idx % 8), BLOCK_SIZE * (block_idx // 8), BLOCK_SIZE, BLOCK_SIZE))
 
 
-        hit = traceRay(PLAYER_POS, PLAYER_ANGLE)
-        pg.draw.line(screen, (0, 255, 0), (PLAYER_POS[0], PLAYER_POS[1]), hit)
+        #hit = traceRay(PLAYER_POS, PLAYER_ANGLE)
+        #pg.draw.line(screen, (0, 255, 0), (PLAYER_POS[0], PLAYER_POS[1]), hit)
         
 
-        pg.draw.rect(screen, (255, 0, 0), pg.Rect(PLAYER_POS[0] - 1, PLAYER_POS[1] - 1, 3, 3))
+        #pg.draw.rect(screen, (255, 0, 0), pg.Rect(PLAYER_POS[0] - 1, PLAYER_POS[1] - 1, 3, 3))
 
 
 

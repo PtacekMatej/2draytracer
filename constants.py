@@ -1,22 +1,17 @@
+import worldBuilder
+
+
 PI = 3.14159265358979323
 
-BLOCK_SIZE = 16
-GRID_SIZE = 8
+BLOCK_SIZE = 64
+GRID_SIZE = 32
+RENDER_DISTANCE = 32
 
-GAME_WORLD = [
-    1, 1, 1, 1, 1, 1, 1, 1,
-    1, 0, 0, 1, 0, 0, 0, 1, 
-    1, 0, 0, 1, 0, 1, 0, 1, 
-    1, 1, 0, 0, 0, 0, 0, 1, 
-    1, 0, 0, 0, 0, 0, 0, 1, 
-    1, 0, 0, 0, 0, 1, 0, 1, 
-    1, 0, 1, 0, 0, 0, 0, 1, 
-    1, 1, 1, 1, 1, 1, 1, 1
-]
+GAME_WORLD = worldBuilder.build(GRID_SIZE)
 
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 
 
-SPEED_M = 0.03
+SPEED_M = 0.001 * BLOCK_SIZE
 SPEED_R = 0.0004

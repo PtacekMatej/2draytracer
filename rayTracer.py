@@ -19,7 +19,7 @@ def traceRayHorizontal(pos_x, pos_y, angle):
     y = pos_y - dist * cot(angle)
     x = pos_x - dist
 
-    for _ in range(10):
+    for _ in range(RENDER_DISTANCE):
         idx_x = (x // BLOCK_SIZE) + idx_correctionX
         idx_y = (y // BLOCK_SIZE)
         if idx_x < 0 or idx_y < 0 or idx_x >= GRID_SIZE or idx_y >= GRID_SIZE:
@@ -29,6 +29,7 @@ def traceRayHorizontal(pos_x, pos_y, angle):
             return (x, y)
         y += y_diff
         x += BLOCK_SIZE * dirX
+    return (float('inf'), float('inf'))
 
 def traceRayVertical(pos_x, pos_y, angle):
     dirY = 1
@@ -44,7 +45,7 @@ def traceRayVertical(pos_x, pos_y, angle):
     x_diff = BLOCK_SIZE * tan(angle) * dirY
     x = pos_x - dist * tan(angle)
     y = pos_y - dist
-    for _ in range(10):
+    for _ in range(RENDER_DISTANCE):
         idx_x = (x // BLOCK_SIZE)
         idx_y = (y // BLOCK_SIZE) + idx_correctionY
         if idx_x < 0 or idx_y < 0 or idx_x >= GRID_SIZE or idx_y >= GRID_SIZE:
@@ -54,6 +55,7 @@ def traceRayVertical(pos_x, pos_y, angle):
             return (x, y)
         y += BLOCK_SIZE * dirY
         x += x_diff
+    return (float('inf'), float('inf'))
 
         
 

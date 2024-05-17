@@ -24,8 +24,10 @@ def render(pos, angle, screen):
         if(d == h):
             shade = 192
 
-        shade /= max(1, d / 100)
+        shade /=  max(1, d / 10 / GRID_SIZE)
         color = (0, int(shade), 0)
-        height = int(8000 / (d * cos(i * PI / 600) ))
+        height = SCREEN_HEIGHT
+        if d != 0:
+            height = int(400 * BLOCK_SIZE / (d * cos(i * PI / 600) ))
 
         pg.draw.rect(screen, color, pg.Rect(SCREEN_WIDTH - (i+100)*4, (SCREEN_HEIGHT-height)/2, 4, height))
