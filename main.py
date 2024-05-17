@@ -5,6 +5,7 @@ from math import *
 PI = 3.14159265358979323
 
 
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 
 BLOCK_SIZE = 16
 GRID_SIZE = 8
@@ -97,6 +98,32 @@ def traceRay(pos, angle):
     return pos_v
 
 
+def render(pos, angle, screen):
+    for i in range(-100, 100):
+        new_angle = angle + (i * PI / 500)
+        if new_angle < 0:
+            new_angle += 2*PI
+        elif new_angle > 2*PI:
+            new_angle -= 2*PI
+        pos_h = traceRayHorizontal(pos[0], pos[1], new_angle)
+        pos_v = traceRayVertical(pos[0], pos[1], new_angle)
+        h = dist(pos, pos_h)
+        v = dist(pos, pos_v)
+        d = min(h, v)
+        shade = 255
+        if(d == h):
+            shade = 192
+
+        shade /= max(1, d / 100)
+        color = (0, int(shade), 0)
+        height = int(8000 / (d * cos(i * PI / 500) ))
+
+        pg.draw.rect(screen, color, pg.Rect((i+100)*4, (SCREEN_HEIGHT-height)/2, 4, height))
+
+
+
+
+
 
 
 
@@ -104,7 +131,6 @@ def traceRay(pos, angle):
 
 def main():
     pg.init()
-    SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
     font = pg.font.Font('freesansbold.ttf', 32)
 
     screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -115,13 +141,20 @@ def main():
     PLAYER_ANGLE = 2*PI/3
     while True:
         screen.fill((0, 0, 0))
-        PLAYER_ANGLE = PLAYER_ANGLE + 0.001 * clock.tick()
+        PLAYER_ANGLE = PLAYER_ANGLE + 0.0003 * clock.tick()
         if PLAYER_ANGLE > 2*PI:
             PLAYER_ANGLE -= 2*PI
 
+
+
+        render(PLAYER_POS, PLAYER_ANGLE, screen)
+
+
+        pg.draw.rect(screen, (0, 0, 0), pg.Rect(0, 0, BLOCK_SIZE * GRID_SIZE, BLOCK_SIZE * GRID_SIZE))
         for block_idx in range(len(GAME_WORLD)):
             if GAME_WORLD[block_idx] == 1:
                 pg.draw.rect(screen, (255, 255, 255), pg.Rect(BLOCK_SIZE * (block_idx % 8), BLOCK_SIZE * (block_idx // 8), BLOCK_SIZE, BLOCK_SIZE))
+
 
         hit = traceRay(PLAYER_POS, PLAYER_ANGLE)
         pg.draw.line(screen, (0, 255, 0), (PLAYER_POS[0], PLAYER_POS[1]), hit)
