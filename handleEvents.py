@@ -18,7 +18,8 @@ def handleMovement(pos, angle, clock):
     keys = pg.key.get_pressed()
     delta_t = clock.tick()
     rotation, _ = pg.mouse.get_rel()
-    pg.mouse.set_pos((SCREEN_WIDTH//2, SCREEN_HEIGHT//2))
+    w, h = pg.display.get_surface().get_size()
+    pg.mouse.set_pos((w//2, h//2))
     angle -= SPEED_R * delta_t * rotation
     if angle < 0:
         angle += 2*PI
